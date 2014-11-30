@@ -6,8 +6,8 @@
 </head>
 <body ng-controller='DemoCtrl'>
   <h1>Demo App</h1>
-  <div>
-  	<input type="text" highlight-search ng-model="searchValue">
+  <div highlight-search ng-model="searchValue">
+  	<input type="text" ng-model="searchValue">
   	<ul>
   		<li ng-repeat="item in items" highlight-result='{{item}}'></li>
   	</ul>

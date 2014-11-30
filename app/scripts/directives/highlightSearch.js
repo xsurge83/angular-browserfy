@@ -40,8 +40,12 @@ function HighlightResultDirective($interpolate) {
             }
 
             function highLight(itemValue, searchValue) {
-                return itemValue
-                    .replace(new RegExp('\\b(' + searchValue + ')\\b', "gi"), wrapWithTag("$1"))
+                var index, words = searchValue.split(/\b\s+/);
+                for(index in words){
+                    itemValue = itemValue
+                    .replace(new RegExp('\\b(' + words[index] + ')\\b', "gi"), wrapWithTag("$1"))
+                }
+                return itemValue;
             }
 
             function wrapWithTag(value) {
