@@ -4,17 +4,14 @@
   <title>My awesome app</title>
   <link rel="stylesheet" href="css/main.css" />
 </head>
-<body ng-controller='WelcomeCtrl'>
-
-  <h1>My awesome app</h1>
-
-  <p>{{testVar}}</p>
-  <div highlight-search ng-model='testVar'>
-  	<input type="text" highlight-search ng-model='testVar'>
-  	<div highlight-result='{{resultItem}}'></div>
+<body ng-controller='DemoCtrl'>
+  <h1>Demo App</h1>
+  <div>
+  	<input type="text" highlight-search ng-model="searchValue">
+  	<ul>
+  		<li ng-repeat="item in items" highlight-result='{{item}}'></li>
+  	</ul>
   </div>
- 
   <script src="/js/bundle.js"></script>
-
 </body>
 </html>
