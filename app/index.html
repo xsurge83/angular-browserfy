@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <title>My awesome app</title>
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body ng-controller='WelcomeCtrl'>
+
+  <h1>My awesome app</h1>
+
+  <p>{{testVar}}</p>
+  <div highlight-search ng-model='testVar'>
+  	<input type="text" highlight-search ng-model='testVar'>
+  	<div highlight-result='{{resultItem}}'></div>
+  </div>
+  
+
+  <script src="/js/bundle.js"></script>
+
+</body>
+</html>
