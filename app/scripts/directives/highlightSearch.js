@@ -6,13 +6,13 @@ var highlightSearchModule = angular.module('myApp.directives.highlightSearch', [
 
 HighlightSearchCtrl.$inject = ['$scope', '$rootScope'];
 
-function HighlightSearchCtrl($scope, $rootScope) {
-    $scope.$watch('value', function (newVal) {
-        $rootScope.$broadcast('highlightupdate', newVal);
-    });
+function HighlightSearchCtrl($scope) {
+    this.getCurrentSearchValue = function getCurrentSearchValue() {
+        return $scope.value;
+    };
 }
 
-function HighlightSearchDirective($interpolate) {
+function HighlightSearchDirective() {
     return {
         restrict: 'A',
         scope: {
@@ -26,13 +26,20 @@ function HighlightResultDirective($interpolate) {
     var TAG = 'b';
     return {
         restrict: 'A',
-        link: function (scope, element, attrs) {
-            var resultItem = $interpolate(attrs.highlightResult, false)(scope);
-            scope.$on('highlightupdate', highlightElement)
+        require: '^highlightSearch',
+        link: function (scope, element, attrs, highlightSearchCtrl) {
+            var curSearch, resultItem = $interpolate(attrs.highlightResult, false)(scope);
+
+            scope.$watch(highlightSearchCtrl.getCurrentSearchValue, function (newValue, oldValue) {
+                if (curSearch !== newValue) {
+                    curSearch = newValue;
+                    highlightElement(newValue);
+                }
+            });
 
             element.append(resultItem);
 
-            function highlightElement($event, searchValue) {
+            function highlightElement(searchValue) {
                 if (searchValue) {
                     element.empty();
                     element.append(highLight(resultItem, searchValue));
@@ -41,9 +48,9 @@ function HighlightResultDirective($interpolate) {
 
             function highLight(itemValue, searchValue) {
                 var index, words = searchValue.split(/\b\s+/);
-                for(index in words){
+                for (index in words) {
                     itemValue = itemValue
-                    .replace(new RegExp('\\b(' + words[index] + ')\\b', "gi"), wrapWithTag("$1"))
+                        .replace(new RegExp('\\b(' + words[index] + ')\\b', "gi"), wrapWithTag("$1"))
                 }
                 return itemValue;
             }
